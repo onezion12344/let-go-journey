@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>放手之旅 — 30天走出愛上癮</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1a2e">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕊️</text></svg>">
+</head>
+<body>
+<div id="app">
+  <!-- Splash Screen -->
+  <div id="splash" class="screen active">
+    <div class="splash-content">
+      <div class="splash-icon">🕊️</div>
+      <h1 class="splash-title">放手之旅</h1>
+      <p class="splash-subtitle">30 天走出愛上癮</p>
+      <p class="splash-desc">基於 CBT 的互動遊戲 · 每天 10 分鐘</p>
+      <button id="btn-start" class="btn-primary">開始旅程</button>
+      <button id="btn-continue" class="btn-secondary" style="display:none">繼續旅程</button>
+    </div>
+  </div>
+
+  <!-- Map Screen -->
+  <div id="map" class="screen">
+    <header class="game-header">
+      <div class="header-left">
+        <span id="phase-icon" class="phase-icon">🏰</span>
+        <div>
+          <span id="phase-name" class="phase-name">覺醒之塔</span>
+          <span id="day-counter" class="day-counter">第 1 天</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="music-btn" onclick="toggleMusic()" title="音樂">🎵</button>
+        <button class="lang-btn" onclick="toggleLang()" id="lang-btn">🇨🇳 中文</button>
+        <span id="progress-text" class="progress-text">0/30</span>
+        <div class="progress-ring">
+          <svg width="36" height="36">
+            <circle cx="18" cy="18" r="15" fill="none" stroke="#2a2a4e" stroke-width="3"/>
+            <circle id="progress-circle" cx="18" cy="18" r="15" fill="none" stroke="#7c5cfc" stroke-width="3" 
+              stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round" transform="rotate(-90,18,18)"/>
+          </svg>
+          <span id="progress-pct" class="progress-pct">0%</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="phases-track" id="phases-track"></div>
+    <div class="map-days" id="map-days"></div>
+    <div class="map-actions">
+      <button onclick="showMoodChart()">📊 心情趨勢</button>
+      <button onclick="toggleMusicPlayer()">🎵 音樂播放器</button>
+    </div>
+  </div>
+
+  <!-- Game Screen (Daily Session) -->
+  <div id="game" class="screen">
+    <header class="game-header">
+      <div class="header-left">
+        <button id="btn-back" class="btn-icon">←</button>
+        <span id="game-day-label" class="day-label">第 1 天</span>
+      </div>
+      <div class="header-right">
+        <button class="music-btn" onclick="toggleMusic()" title="音樂">🎵</button>
+        <button class="lang-btn" onclick="toggleLang()" id="lang-btn-game">🇨🇳 中文</button>
+        <span id="timer" class="timer">⏱ 10:00</span>
+      </div>
+    </header>
+
+    <div class="game-content" id="game-content">
+      <div class="phase-badge" id="phase-badge">🏰 覺醒之塔</div>
+      
+      <!-- Step: Reading -->
+      <div class="game-step" id="step-reading">
+        <div class="step-icon">📖</div>
+        <h2 class="step-title" id="step-reading-title"></h2>
+        <div class="reading-card" id="reading-text"></div>
+        <button class="btn-next" data-to="question" id="btn-reading-done">我讀完了 →</button>
+      </div>
+
+      <!-- Step: Question -->
+      <div class="game-step" id="step-question" style="display:none">
+        <div class="step-icon">💭</div>
+        <h2 class="step-title" id="step-question-title">反思</h2>
+        <p class="question-text" id="question-text"></p>
+        <textarea class="journal-input" id="journal-input" placeholder="寫下你的想法..." rows="4"></textarea>
+        <button class="btn-next" data-to="action">下一步 →</button>
+      </div>
+
+      <!-- Step: Action -->
+      <div class="game-step" id="step-action" style="display:none">
+        <div class="step-icon">⚡</div>
+        <h2 class="step-title" id="step-action-title">今日行動</h2>
+        <p class="action-text" id="action-text"></p>
+        <div class="action-checkbox">
+          <input type="checkbox" id="action-done">
+          <label for="action-done" id="action-label">我完成了今天的行動</label>
+        </div>
+        <button class="btn-next" data-to="mood" id="btn-to-mood">下一步 →</button>
+      </div>
+
+      <!-- Step: Mood -->
+      <div class="game-step" id="step-mood" style="display:none">
+        <div class="step-icon">💖</div>
+        <h2 class="step-title" id="step-mood-title">心情紀錄</h2>
+        <p class="mood-label" id="mood-label-text">今天你的整體情緒如何？</p>
+        <div class="mood-slider-container">
+          <div class="mood-labels">
+            <span id="mood-bad">😢 很差</span>
+            <span id="mood-ok">😐 普通</span>
+            <span id="mood-good">😊 很好</span>
+          </div>
+          <input type="range" id="mood-slider" min="1" max="10" value="5" class="mood-slider">
+          <div class="mood-value" id="mood-value">5</div>
+          <div class="mood-face" id="mood-face">😐</div>
+        </div>
+        <button class="btn-next" data-to="complete" id="btn-complete-day" disabled>完成今天 →</button>
+      </div>
+
+      <!-- Step: Complete -->
+      <div class="game-step" id="step-complete" style="display:none">
+        <div class="complete-icon" id="complete-icon">🫂</div>
+        <h2 class="step-title" id="complete-badge">覺醒者</h2>
+        <div class="affirmation-card" id="affirmation-text"></div>
+        <p class="complete-message" id="complete-message">今天完成了！明天繼續 💪</p>
+        <button id="btn-view-map" class="btn-primary">返回地圖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music Player -->
+  <div class="music-player" id="music-player">
+    <div class="music-player-header">
+      <span class="music-track-name" id="track-name">靜心旋律</span>
+      <button class="btn-icon" onclick="toggleMusicPlayer()" style="font-size:1rem">✕</button>
+    </div>
+    <div class="music-controls">
+      <button onclick="music.nextTrack(); document.getElementById('track-name').textContent=music.getTrackName()">⏮</button>
+      <button class="play-btn" onclick="toggleMusic()" id="play-btn">▶</button>
+      <button onclick="music.nextTrack(); document.getElementById('track-name').textContent=music.getTrackName()">⏭</button>
+    </div>
+    <div class="music-volume">
+      <span style="font-size:.7rem;color:#888">🔈</span>
+      <input type="range" min="0" max="1" step="0.05" value="0.3"
+        oninput="music.setVolume(parseFloat(this.value))">
+      <span style="font-size:.7rem;color:#888">🔊</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

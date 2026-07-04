@@ -1,0 +1,289 @@
+{
+  "title": "Letting Go Journey: 30 Days to Overcome Love Addiction",
+  "subtitle": "An Interactive CBT Game Based on 'Letting Go of Your Ex'",
+  "total_days": 30,
+  "phases": [
+    {"id": "awakening", "name": "Tower of Awakening", "days": [1,2,3], "icon": "🏰"},
+    {"id": "withdrawal", "name": "Withdrawal Trials", "days": [4,5,6], "icon": "⚔️"},
+    {"id": "triggers", "name": "Map Navigation", "days": [7,8,9], "icon": "🗺️"},
+    {"id": "thinking", "name": "Mind Maze", "days": [10,11,12], "icon": "🧠"},
+    {"id": "truth", "name": "Mirror of Truth", "days": [13,14,15], "icon": "👁️"},
+    {"id": "roots", "name": "Forest of Origins", "days": [16,17,18], "icon": "🌳"},
+    {"id": "forgiveness", "name": "Spring of Forgiveness", "days": [19,20,21], "icon": "💧"},
+    {"id": "values", "name": "Star Compass", "days": [22,23,24], "icon": "⭐"},
+    {"id": "forward", "name": "Runway to Takeoff", "days": [25,26,27], "icon": "🚀"},
+    {"id": "integration", "name": "Crystal of Legacy", "days": [28,29,30], "icon": "🏆"}
+  ],
+  "days": [
+    {
+      "day": 1, "phase": "awakening",
+      "title": "Admit You're Addicted",
+      "reading": "You can't stop thinking about your ex — not because you're weak, but because your brain is in withdrawal. Research shows that falling in love activates the brain's dopamine reward pathway — the same region activated by drug use. When the relationship ends, your brain enters a withdrawal state. This isn't your fault. It's biology.",
+      "question": "Looking back at your breakup: do you have any of these symptoms? Obsessive thinking, craving contact, emotional breakdowns, self-destructive behaviors?",
+      "action": "Rate your pain level today from 0-10. Then write one honest sentence about how you're feeling right now.",
+      "affirmation": "I acknowledge that my pain is real. Acknowledgment is the first step to change.",
+      "badge": "🫂 Awakener"
+    },
+    {
+      "day": 2, "phase": "awakening",
+      "title": "Recognize the Exaholic Cycle",
+      "reading": "Here's the key insight: every time you contact your ex, you feel temporary relief — but then your symptoms come back even stronger. This is the exaholic cycle: craving → contact → temporary relief → stronger rebound symptoms → even stronger craving. The only way to break this cycle is to disconnect the neural link between 'contact' and 'relief'.",
+      "question": "Have you experienced 'feeling worse after contacting your ex'? Describe how this cycle works in your life.",
+      "action": "Write down the last moment you wanted to contact your ex. What did you really need in that moment?",
+      "affirmation": "Every time I resist contacting them, I'm retraining my brain.",
+      "badge": "🔄 Cycle Observer"
+    },
+    {
+      "day": 3, "phase": "awakening",
+      "title": "Write Your Motivation Statement",
+      "reading": "To truly let go, you need a reason stronger than your pain. CBT teaches us that behavioral change requires strong intrinsic motivation. Today you'll write a 'motivation statement' — something to remind you why you're doing this when you're at your most vulnerable.",
+      "question": "1. What's the hardest part of letting go? 2. What will it cost you NOT to let go? 3. What do you truly want?",
+      "action": "Write a motivation statement (30-60 words). Put it where you can see it. Example: 'I'm letting go not because they're not worth it, but because I deserve a life without this pain.'",
+      "affirmation": "I choose to let go because I deserve peace.",
+      "badge": "📜 Vow Writer"
+    },
+    {
+      "day": 4, "phase": "withdrawal",
+      "title": "Start Your Self-Monitoring Log",
+      "reading": "CBT's most powerful tool: the self-monitoring log. Whenever you notice symptoms — urge to contact, nightmares, emotional breakdown — STOP. Record: time, situation, automatic thoughts, emotions, distress score. The act of recording itself helps break the automatic response cycle.",
+      "question": "When do you most often think of your ex? Morning? Late night? When you're alone?",
+      "action": "Record your symptoms at least 2 times today. Format: Time | Situation | Thoughts | Emotions | Distress (1-10)",
+      "affirmation": "I'm learning to observe myself instead of being controlled by my symptoms.",
+      "badge": "📝 Logger"
+    },
+    {
+      "day": 5, "phase": "withdrawal",
+      "title": "Cut Off Contact",
+      "reading": "No contact is the hardest but most effective strategy. You need to cut ties both physically and mentally: no messages, no social media stalking, no keeping their things, no driving past their home. You'll experience an 'extinction burst' where symptoms temporarily worsen — this means your brain is unlearning the addiction.",
+      "question": "What 'feeling close to your ex' behaviors are you still doing? Looking at photos? Checking social media? Asking mutual friends?",
+      "action": "List all your 'feeling close' behaviors. Pick one to stop starting today.",
+      "affirmation": "Short-term pain is the price of long-term freedom.",
+      "badge": "✂️ Connection Breaker"
+    },
+    {
+      "day": 6, "phase": "withdrawal",
+      "title": "Ride Out the Cravings",
+      "reading": "A craving is not a command — it's just a feeling. Research shows intense cravings naturally subside within 10-20 minutes if you don't act on them. Like a wave, it rises, peaks, and falls. Every time you resist acting on a craving, you prove to yourself that you are stronger than the urge.",
+      "question": "When a craving hits, how do you usually respond?",
+      "action": "When a craving comes, set a 10-minute timer. Don't do anything — just feel it. Reassess after 10 minutes. Write it down.",
+      "affirmation": "I can tolerate discomfort. I don't have to act on every urge.",
+      "badge": "🌊 Craving Surfer"
+    },
+    {
+      "day": 7, "phase": "triggers",
+      "title": "Identify Your Triggers",
+      "reading": "Triggers are specific situations, times, places, or emotions that immediately spark a craving for your ex. Common triggers: weekends alone, late nights, a specific song, a certain street, stressful times. Identify them and you can prepare for them.",
+      "question": "What are your triggers? List at least 5.",
+      "action": "Create your 'trigger map': time triggers, place triggers, emotional triggers, people triggers. Write one coping plan for each trigger.",
+      "affirmation": "I know where my landmines are. I'm already prepared.",
+      "badge": "🗺️ Map Maker"
+    },
+    {
+      "day": 8, "phase": "triggers",
+      "title": "Set Healthy Boundaries",
+      "reading": "Boundaries aren't rules to control the other person — they're about you. A boundary is telling yourself: 'If someone treats me this way, I will respond like this.' After a breakup, boundaries blur easily. Be clear: no more sexual interactions, no more late-night talks, no more 'just friends' comfort.",
+      "question": "What boundaries between you and your ex have become blurred?",
+      "action": "Write a boundary letter (you don't have to send it). Clearly state how you'll interact with your ex and what you'll do if they cross the line.",
+      "affirmation": "My boundaries protect my peace, not control others.",
+      "badge": "🛡️ Boundary Guardian"
+    },
+    {
+      "day": 9, "phase": "triggers",
+      "title": "Rebuild Self-Care",
+      "reading": "After a breakup, the body is the first thing neglected. Poor sleep, no appetite, no exercise, no socializing. But body and mind are connected — caring for your body IS caring for your mind. CBT emphasizes: behavioral change drives emotional change.",
+      "question": "What's happened to your physical health since the breakup? Sleep? Diet? Exercise?",
+      "action": "Do ONE thing today to care for your body: eat a proper meal, walk for 15 minutes, take a shower, or go to bed an hour early.",
+      "affirmation": "My body deserves care, whether or not I'm in a relationship.",
+      "badge": "🌱 Self-Carer"
+    },
+    {
+      "day": 10, "phase": "thinking",
+      "title": "Introducing the ABC Model",
+      "reading": "CBT's core insight: it's not the breakup that causes your pain — it's how you THINK about the breakup. A (Activating event) → B (Belief/Thought) → C (Consequence/Emotion). The same event (A) can lead to completely different emotions (C) depending on your thoughts (B). Change B, and you change everything.",
+      "question": "Think of a recent triggering event. What were your automatic thoughts about it? Are those thoughts true?",
+      "action": "Analyze using ABC: A = Facts (just what happened) B = Your automatic thoughts C = Your emotions and behaviors",
+      "affirmation": "I can't control what happens, but I can control how I think about it.",
+      "badge": "🧩 ABC Analyst"
+    },
+    {
+      "day": 11, "phase": "thinking",
+      "title": "Spot Red-Flag Thinking",
+      "reading": "The book lists 10 types of 'red-flag thinking': Denial ('We'll get back together'), Rationalization ('They had their reasons'), Emotional Reasoning ('I feel lonely, so I'll always be alone'), All-or-Nothing ('They'll never change'), Jumping to Conclusions ('They're already with someone else'), Personalization ('They don't love me = I'm unlovable'), Magnification/Minimization, Labeling, Specialness Fallacy, Accepting Norms.",
+      "question": "Which red-flag thinking patterns do you use most?",
+      "action": "Find 3 red-flag thoughts from your log. Label each one (denial? emotional reasoning?).",
+      "affirmation": "My thoughts are not facts. I can question them.",
+      "badge": "🚩 Thought Detective"
+    },
+    {
+      "day": 12, "phase": "thinking",
+      "title": "Challenge Thoughts with the 3 Ds",
+      "reading": "The 3 Ds: Detect → Debate → Discriminate. After spotting a red-flag thought, find evidence for and against it. Then create a more accurate, helpful version. Key insight: the goal isn't blind positivity — it's ACCURACY.",
+      "question": "Use the 3 Ds on one red-flag thought you found yesterday. What's the evidence? What's the more accurate version?",
+      "action": "Full 3D exercise: Write original thought → Evidence for → Evidence against → Rewrite as accurate version",
+      "affirmation": "The truth sets me free, even when the truth hurts.",
+      "badge": "⚖️ Thought Challenger"
+    },
+    {
+      "day": 13, "phase": "truth",
+      "title": "Take Your Ex Off the Pedestal",
+      "reading": "Your perception of your ex is largely fantasy. You've put them on a pedestal — thinking they're the best, perfect, the only one who truly gets you. But the truth is: they're just a person, with flaws and problems like everyone else. The breakup itself is proof — if they were really that perfect for you, you wouldn't be here.",
+      "question": "What 'overly positive' beliefs do you hold about your ex?",
+      "action": "List 5 flaws your ex has (ones you've been ignoring). Not to hate them, but to see the whole person.",
+      "affirmation": "They're not perfect. And I don't need them to be perfect to let go.",
+      "badge": "👁️ Truth Seeker"
+    },
+    {
+      "day": 14, "phase": "truth",
+      "title": "Their Choices Don't Reflect Your Worth",
+      "reading": "The most painful false belief: 'Their leaving means I'm not worthy of love.' But the truth is: their choices reflect their own needs and limitations — not your value. You can be a wonderful person and still not be what they want. Both can be true simultaneously.",
+      "question": "Have you interpreted their departure as a judgment of your personal worth?",
+      "action": "Write: 'My ex's choice reflects _____, not my value as a person.' Fill in the blank. Write it three times.",
+      "affirmation": "Their choices are their story, not my verdict.",
+      "badge": "💎 Worth Recognizer"
+    },
+    {
+      "day": 15, "phase": "truth",
+      "title": "Accept You Can't Change Them",
+      "reading": "Do you want to change them? Make them love you more? Make them realize your value? The truth is: you can't change anyone. People only change when THEY want to, choose to, and work at it every day. Waiting for them to change is wasting your life.",
+      "question": "Are you still waiting for them to change? What are you waiting for?",
+      "action": "Practice Radical Acceptance: Say out loud three times: 'We are broken up. I don't like it, but it's true. I choose to accept this reality and stop fighting it.'",
+      "affirmation": "I release the fantasy of changing them and give that energy back to myself.",
+      "badge": "🕊️ Releaser"
+    },
+    {
+      "day": 16, "phase": "roots",
+      "title": "Explore Childhood Messages",
+      "reading": "Your core beliefs about love were formed in childhood. What did your family teach you about love? Safe or unsafe? Conditional or unconditional? Reliable or unreliable? If you grew up in an unstable environment, your brain learned to associate 'instability' with 'love.' This is why you're drawn to people who hurt you.",
+      "question": "What did your family environment teach you about love?",
+      "action": "Describe your childhood family environment: Who was at home? What was the atmosphere? Did you feel safe? Then answer: What beliefs did this teach you about yourself?",
+      "affirmation": "My past explains my patterns but does not define my future.",
+      "badge": "🔍 Root Seeker"
+    },
+    {
+      "day": 17, "phase": "roots",
+      "title": "Your Attachment Style",
+      "reading": "Attachment theory: Secure (trusts easily), Anxious (craves intimacy but fears abandonment), Avoidant (fears closeness, needs space), Disorganized (alternates between both). Your attachment style affects who you choose and how you react in relationships. Understanding your pattern is the first step to breaking it.",
+      "question": "What's your attachment style? Why do you think so?",
+      "action": "Review your romantic history. What type of people are you drawn to? How does this connect to your childhood?",
+      "affirmation": "Understanding my patterns isn't for self-blame — it's so I can choose differently.",
+      "badge": "🧬 Pattern Recognizer"
+    },
+    {
+      "day": 18, "phase": "roots",
+      "title": "Replace Unhealthy Core Beliefs",
+      "reading": "The harmful core beliefs you learned in childhood need to be replaced with healthier truths. Tell yourself every night: I am valuable. I am worthy of love. I don't need a partner to be complete. I am my own safe harbor. These words may not feel true yet — but repetition makes them real.",
+      "question": "What healthy truths do you need to replace your old beliefs with?",
+      "action": "Write 5 healthy beliefs you want to internalize. Pick one and say it out loud 10 times today.",
+      "affirmation": "I am worthy. I don't need anyone's approval to exist.",
+      "badge": "🌅 Belief Rebuilder"
+    },
+    {
+      "day": 19, "phase": "forgiveness",
+      "title": "Acknowledge Your Role",
+      "reading": "Few breakups are entirely one person's fault. Seeing your own role — not for self-blame, but to shift from victim to participant. When you say 'I also had a part in this,' you take your power back.",
+      "question": "What did you do in this relationship that hurt the other person or yourself?",
+      "action": "Write an apology letter to your ex (don't need to send it). Honestly list your responsibility.",
+      "affirmation": "Seeing my mistakes isn't weakness — it's strength.",
+      "badge": "🤝 Responsibility Taker"
+    },
+    {
+      "day": 20, "phase": "forgiveness",
+      "title": "The Choice to Forgive",
+      "reading": "Forgiveness isn't because the other person deserves it. Forgiveness is so YOU don't get consumed by past pain. It doesn't mean you approve of their behavior or want them back — it means you choose not to let old wounds control your present.",
+      "question": "What anger about your ex (or yourself) can't you let go of?",
+      "action": "Write: 'I choose to forgive ____ not because they deserve it, but because I deserve peace.' Fill in the name. Say it out loud.",
+      "affirmation": "Forgiveness is a gift I give myself. I choose freedom.",
+      "badge": "💧 Forgiver"
+    },
+    {
+      "day": 21, "phase": "forgiveness",
+      "title": "Write an Apology to Yourself",
+      "reading": "During this breakup, you may have hurt yourself too — denying your needs, ignoring your boundaries, acting against your values. It's time to make peace with yourself.",
+      "question": "What in this experience disappointed you most about yourself?",
+      "action": "Write an apology letter to yourself. Say sorry for the ways you hurt yourself, for the parts of you you lost. Then say: I forgive you.",
+      "affirmation": "I forgive myself. I did my best. I will do better from now on.",
+      "badge": "🪞 Self-Reconciler"
+    },
+    {
+      "day": 22, "phase": "values",
+      "title": "Discover Your Core Values",
+      "reading": "What truly matters to you? Not what society says should matter — but what YOU deeply care about. Your values are your compass. When you're lost, they tell you where to go. Values: honesty, family, freedom, growth, kindness, loyalty, peace...",
+      "question": "From these values, pick your top 5: honesty, commitment, communication, fairness, family, friendship, freedom, independence, kindness, loyalty, peace, growth, respect, responsibility, resilience, service, spirituality, understanding.",
+      "action": "Write your top 5 core values. For each one, describe how you currently live it.",
+      "affirmation": "My values are my inner compass. I won't abandon them for anyone.",
+      "badge": "⭐ Value Discoverer"
+    },
+    {
+      "day": 23, "phase": "values",
+      "title": "Choose Partners by Values",
+      "reading": "Your past partner selection criteria might have been: chemistry, looks, excitement. None of these relate to values. Research shows shared values predict long-term relationship happiness better than chemistry does. Next time: ask 'Do our values align?' before asking 'Does my heart race?'",
+      "question": "What values must a future partner share with you? What values are absolute deal-breakers?",
+      "action": "List the 5 values you need in a partner and 3 absolute deal-breakers (values you cannot accept).",
+      "affirmation": "I choose people who respect my values, not people who make me doubt myself.",
+      "badge": "🗺️ Value Navigator"
+    },
+    {
+      "day": 24, "phase": "values",
+      "title": "Values Comparison with Your Ex",
+      "reading": "Review your relationship with your ex — did your values truly align? Often we love a fantasy, projecting values onto them that they never really had. When you honestly compare core values, you might discover you were never truly compatible.",
+      "question": "What values did you and your ex share? What values conflicted? Did these conflicts cause your problems?",
+      "action": "Draw a Venn diagram: one circle is your core values, the other is your ex's. How big is the overlap?",
+      "affirmation": "Value alignment matters more than passion's intensity.",
+      "badge": "📊 Value Analyst"
+    },
+    {
+      "day": 25, "phase": "forward",
+      "title": "Redefine Your Identity",
+      "reading": "After a breakup you may have lost the 'we' identity. But when 'we' disappears, 'I' finally has a chance to emerge. You're not someone's ex — you're yourself. This time alone isn't empty; it's an opportunity to rediscover who you are.",
+      "question": "Who are you without your ex? What else exists in your life besides that relationship?",
+      "action": "Write 10 words that describe you, without using any relationship-related terms (not 'single' or 'someone's ex').",
+      "affirmation": "I am not anyone's accessory. I am a complete person.",
+      "badge": "🦋 Reborn"
+    },
+    {
+      "day": 26, "phase": "forward",
+      "title": "Make Your 3-Month Plan",
+      "reading": "Now that you have some space and clarity, it's time to redirect energy from memory to creation. CBT emphasizes behavioral activation — filling the void with meaningful activities.",
+      "question": "If you completely forgot about your ex, what would you want to do in the next three months?",
+      "action": "Create a 3-month plan: 1. A skill you want to learn 2. A place you want to go 3. A relationship you want to improve 4. Something you've always wanted to do but never did.",
+      "affirmation": "My future is not in the past. It's in my next step.",
+      "badge": "🚀 Future Designer"
+    },
+    {
+      "day": 27, "phase": "forward",
+      "title": "Prepare to Date (But Don't Rush)",
+      "reading": "When are you ready to date again? When you can mention your ex without strong emotion — no anger, no sadness, no longing. Only when you can say 'We had good times, but it's over. I hope they're well' without your heart breaking are you truly ready.",
+      "question": "Do you think you're ready to date? How will you know when you truly are?",
+      "action": "Write your expectations for your next relationship: how you want to be treated, how you'll maintain boundaries, what you'll do differently.",
+      "affirmation": "I'll date when I'm ready, not to fill a void.",
+      "badge": "🧘 Preparer"
+    },
+    {
+      "day": 28, "phase": "integration",
+      "title": "Review: 30 Days Ago vs Now",
+      "reading": "Look back at your journey. 30 days ago you were probably in pain, lost, full of longing. How about now? Maybe not fully healed, but there's been change. CBT's most important insight: change isn't linear, but effort compounds.",
+      "question": "Looking back at your logs and exercises: what's the biggest change? Which patterns remain?",
+      "action": "Re-do the Day 1 question: rate your pain level 0-10. Compare with Day 1. Write your observations.",
+      "affirmation": "I've come a long way. Even if there's still road ahead, I'm not the person who started this journey.",
+      "badge": "📖 Reviewer"
+    },
+    {
+      "day": 29, "phase": "integration",
+      "title": "Write a Letter to Future You",
+      "reading": "Future you may face hard moments — triggers, loneliness, holidays, seeing your ex's new updates. You'll need a reminder: you walked this path before, you know you can survive it. The letter you write today is a gift to your future self.",
+      "question": "What would future you need to hear in a moment of weakness?",
+      "action": "Write a letter to yourself (6 months from now). Include: what you learned from this experience, what you can do when feeling vulnerable, your commitment to yourself.",
+      "affirmation": "Future me, remember: you're stronger than you think.",
+      "badge": "📬 Time Capsule"
+    },
+    {
+      "day": 30, "phase": "integration",
+      "title": "Letting Go Isn't an End — It's a Beginning",
+      "reading": "The most important truth: letting go isn't losing — it's gaining. You gained space, clarity, self-knowledge, and a future. The ability to love yourself is the foundation of all love. Only when you're truly with yourself are you ready to truly be with someone else.",
+      "question": "What's the biggest gift this journey gave you?",
+      "action": "Write the 3 most important lessons you learned in these 30 days. Put them where you can see them. Celebrate your completion!",
+      "affirmation": "I completed this 30-day journey. I chose to let go — not because I gave up on love, but because I chose better love, including love for myself.",
+      "badge": "🏆 Completer"
+    }
+  ]
+}
