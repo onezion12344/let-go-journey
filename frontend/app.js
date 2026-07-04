@@ -235,6 +235,20 @@ document.addEventListener('DOMContentLoaded', init);
 async function init() {
   spawnParticles();
 
+  // ── Check Auth ──
+  try {
+    const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    const authData = await authRes.json();
+    if (!authData.logged_in) {
+      showAuthScreen();
+      return;
+    }
+  } catch (e) {
+    showAuthScreen();
+    return;
+  }
+
+  // ── Load Game Data ──
   try {
     const [contentRes, progressRes] = await Promise.all([
       fetch(`${API}/api/content`).then(r => r.json()),
@@ -243,9 +257,16 @@ async function init() {
     content = contentRes;
     progress = progressRes;
   } catch (e) {
-    const resp = await fetch('/api/content');
-    content = await resp.json();
-    progress = { current_day: 1, completed_days: [], mood_history: [], journal_entries: {}, lang: 'zh' };
+    // Fallback
+    try {
+      const resp = await fetch('/api/content');
+      content = await resp.json();
+      const progResp = await fetch('/api/progress');
+      progress = await progResp.json();
+    } catch (e2) {
+      showAuthScreen();
+      return;
+    }
   }
 
   currentLang = progress.lang || 'zh';
@@ -288,6 +309,106 @@ async function init() {
     const faces = ['😢','😢','😢','😐','😐','😐','😊','😊','😊','😊'];
     document.getElementById('mood-face').textContent = faces[val - 1] || '😐';
   });
+
+  // ── Auth Event Handlers ──
+  document.getElementById('show-register').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('auth-login').style.display = 'none';
+    document.getElementById('auth-register').style.display = 'block';
+    document.getElementById('login-error').textContent = '';
+    document.getElementById('reg-error').textContent = '';
+  });
+  document.getElementById('show-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('auth-login').style.display = 'block';
+    document.getElementById('auth-register').style.display = 'none';
+    document.getElementById('login-error').textContent = '';
+    document.getElementById('reg-error').textContent = '';
+  });
+
+  document.getElementById('btn-login').addEventListener('click', async () => {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = '';
+    if (!username || !password) { errEl.textContent = '請填寫用戶名和密碼'; return; }
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({username, password})
+      });
+      const data = await res.json();
+      if (!res.ok) { errEl.textContent = data.error || '登入失敗'; return; }
+      afterLogin();
+    } catch(e) { errEl.textContent = '網絡錯誤，請重試'; }
+  });
+
+  document.getElementById('btn-register').addEventListener('click', async () => {
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const confirm = document.getElementById('reg-confirm').value;
+    const errEl = document.getElementById('reg-error');
+    errEl.textContent = '';
+    if (!username || !password || !confirm) { errEl.textContent = '請填寫所有欄位'; return; }
+    if (password !== confirm) { errEl.textContent = '兩次密碼不一致'; return; }
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({username, password})
+      });
+      const data = await res.json();
+      if (!res.ok) { errEl.textContent = data.error || '註冊失敗'; return; }
+      afterLogin();
+    } catch(e) { errEl.textContent = '網絡錯誤，請重試'; }
+  });
+
+  // ── Logout ──
+  document.getElementById('btn-logout').addEventListener('click', async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    sessionStorage.clear();
+    localStorage.removeItem('music_state');
+    document.getElementById('auth-login').style.display = 'block';
+    document.getElementById('auth-register').style.display = 'none';
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-error').textContent = '';
+    showAuthScreen();
+  });
+
+  // Enter key to submit
+  document.getElementById('login-password').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+  });
+  document.getElementById('reg-confirm').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-register').click();
+  });
+}
+
+// ── Auth ──
+function showAuthScreen() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('auth').classList.add('active');
+}
+
+async function afterLogin() {
+  try {
+    const [contentRes, progressRes] = await Promise.all([
+      fetch(`${API}/api/content`).then(r => r.json()),
+      fetch(`${API}/api/progress`).then(r => r.json())
+    ]);
+    content = contentRes;
+    progress = progressRes;
+  } catch (e) {
+    showAuthScreen();
+    return;
+  }
+  currentLang = progress.lang || 'zh';
+  document.getElementById('btn-start').textContent = t('start');
+  if (progress.completed_days && progress.completed_days.length > 0) {
+    document.getElementById('btn-continue').style.display = 'block';
+    document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
+  }
+  showScreen('splash');
 }
 
 // ── Screen Navigation ──

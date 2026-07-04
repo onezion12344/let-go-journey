@@ -1,6 +1,9 @@
 # Data files (user progress — don't commit)
 backend/data/*.json
 
+# Config (auto-generated secret key)
+backend/config/
+
 # Python
 __pycache__/
 *.pyc

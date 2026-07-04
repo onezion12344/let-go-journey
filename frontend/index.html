@@ -11,8 +11,42 @@
 </head>
 <body>
 <div id="app">
+  <!-- Auth Screen (Login) -->
+  <div id="auth" class="screen active">
+    <div class="auth-container">
+      <div class="auth-card" id="auth-login">
+        <div class="auth-icon">🕊️</div>
+        <h1 class="auth-title">放手之旅</h1>
+        <p class="auth-subtitle">登入以繼續你的旅程</p>
+        <div class="auth-form">
+          <input type="text" id="login-username" class="auth-input" placeholder="用戶名" autocomplete="username" />
+          <input type="password" id="login-password" class="auth-input" placeholder="密碼" autocomplete="current-password" />
+          <div class="auth-error" id="login-error"></div>
+          <button id="btn-login" class="btn-primary auth-btn">登入</button>
+          <p class="auth-toggle">還沒有帳號？<a href="#" id="show-register">註冊</a></p>
+        </div>
+      </div>
+
+      <div class="auth-card" id="auth-register" style="display:none">
+        <div class="auth-icon">🕊️</div>
+        <h1 class="auth-title">建立帳號</h1>
+        <p class="auth-subtitle">免費註冊，立即開始</p>
+        <div class="auth-form">
+          <input type="text" id="reg-username" class="auth-input" placeholder="用戶名（至少3字）" autocomplete="username" />
+          <input type="password" id="reg-password" class="auth-input" placeholder="密碼（至少4字）" autocomplete="new-password" />
+          <input type="password" id="reg-confirm" class="auth-input" placeholder="確認密碼" autocomplete="new-password" />
+          <div class="auth-error" id="reg-error"></div>
+          <button id="btn-register" class="btn-primary auth-btn">註冊</button>
+          <p class="auth-toggle">已有帳號？<a href="#" id="show-login">登入</a></p>
+        </div>
+      </div>
+
+      <div class="auth-footer">開放原始碼 · 基於 CBT 的 30 天互動遊戲</div>
+    </div>
+  </div>
+
   <!-- Splash Screen -->
-  <div id="splash" class="screen active">
+  <div id="splash" class="screen">
     <div class="splash-content">
       <div class="splash-icon">🕊️</div>
       <h1 class="splash-title">放手之旅</h1>
@@ -20,6 +54,7 @@
       <p class="splash-desc">基於 CBT 的互動遊戲 · 每天 10 分鐘</p>
       <button id="btn-start" class="btn-primary">開始旅程</button>
       <button id="btn-continue" class="btn-secondary" style="display:none">繼續旅程</button>
+      <button id="btn-logout" class="btn-ghost-sm" style="margin-top:24px">登出</button>
     </div>
   </div>
 

@@ -128,7 +128,7 @@
 <script>
 async function loadWidget() {
   try {
-    const resp = await fetch('/api/widget');
+    const resp = await fetch('/api/widget/public');
     if (!resp.ok) throw new Error('Not found');
     const data = await resp.json();
     

@@ -63,6 +63,8 @@ body::before {
 .btn-next:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 .btn-icon { background: none; border: none; color: #ccc; font-size: 1.3rem; cursor: pointer; padding: 4px 8px; transition: color .2s; }
 .btn-icon:hover { color: #fff; }
+.btn-ghost-sm { background: none; border: 1px solid rgba(255,255,255,.1); color: #666; padding: 8px 20px; border-radius: 8px; font-size: .8rem; cursor: pointer; transition: all .2s; }
+.btn-ghost-sm:hover { border-color: rgba(255,255,255,.2); color: #999; }
 
 /* ── Game Header ── */
 .game-header {
@@ -282,3 +284,33 @@ body::before {
   .day-cell { font-size: .7rem; }
   .reading-card { padding: 14px; font-size: .9rem; }
 }
+
+/* ── Auth Screen ── */
+#auth {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh; padding: 20px;
+}
+#auth.active { display: flex; }
+.auth-container { width: 100%; max-width: 380px; text-align: center; }
+.auth-card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px; padding: 40px 24px; backdrop-filter: blur(10px);
+}
+.auth-icon { font-size: 48px; margin-bottom: 12px; }
+.auth-title { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.auth-subtitle { font-size: .9rem; color: #888; margin-bottom: 28px; }
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+.auth-input {
+  width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.06); color: #e0e0e8; font-size: .95rem;
+  outline: none; transition: border-color .2s; box-sizing: border-box;
+}
+.auth-input:focus { border-color: #7c5cfc; }
+.auth-input::placeholder { color: #666; }
+.auth-btn { margin-top: 4px; }
+.auth-error { font-size: .8rem; color: #e53935; min-height: 20px; text-align: center; }
+.auth-toggle { font-size: .85rem; color: #666; margin-top: 16px; }
+.auth-toggle a { color: #7c5cfc; text-decoration: none; font-weight: 500; }
+.auth-toggle a:hover { text-decoration: underline; }
+.auth-footer { font-size: .75rem; color: #444; margin-top: 20px; }

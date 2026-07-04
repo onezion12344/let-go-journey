@@ -5,6 +5,10 @@ An interactive CBT-based game that helps you heal from heartbreak in 30 days. Bu
 > **每天 10 分鐘，用科學方法走出愛上癮**
 > *10 minutes a day. Evidence-based. Private.*
 
+## 🌐 Try It Now
+
+**Hosted version:** visit **[https://exaholic.onezion.top/](https://exaholic.onezion.top/)** — register an account and start playing instantly. No setup required.
+
 ## ✨ Features
 
 | | |
@@ -15,7 +19,7 @@ An interactive CBT-based game that helps you heal from heartbreak in 30 days. Bu
 | 📊 **Mood chart** | Track your emotional journey with interactive line chart |
 | 🏆 **Badge system** | 30 unique badges — one for each day completed |
 | 📱 **Android widget** | Native homescreen widget showing daily task + progress |
-| 🔒 **Private** | All progress stored locally on your own server |
+| 🔒 **Private & Secure** | All progress stored per-user with password protection. Sessions expire on logout. |
 | 🆓 **Free & open source** | MIT License |
 
 ## 🚀 Quick Start
