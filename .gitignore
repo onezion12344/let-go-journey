@@ -22,3 +22,4 @@ env/
 # Build artifacts
 dist/
 *.egg-info/
+backend/data/
