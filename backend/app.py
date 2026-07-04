@@ -270,18 +270,24 @@ def get_widget():
         "badge": day_data["badge"] if day_data else "",
         "error": None
     }
-    # Cache for public widget
-    with open(WIDGET_FILE, "w") as f:
+    # Cache per-user for widget public endpoint
+    user_widget_file = os.path.join(DATA_DIR, f"widget_{uid}.json")
+    with open(user_widget_file, "w") as f:
         json.dump(widget, f, ensure_ascii=False)
     return jsonify(widget)
 
 @app.route("/api/widget/public")
 def get_widget_public():
-    """Public widget endpoint — returns cached data or empty state."""
-    if os.path.exists(WIDGET_FILE):
-        with open(WIDGET_FILE, "r") as f:
-            data = json.load(f)
-        return jsonify(data)
+    """Public widget endpoint — returns per-user cached data or empty state.
+    Accepts ?user=<user_id> to load a specific user's cached widget data.
+    """
+    user_id = request.args.get("user", "")
+    if user_id:
+        user_widget_file = os.path.join(DATA_DIR, f"widget_{user_id}.json")
+        if os.path.exists(user_widget_file):
+            with open(user_widget_file, "r") as f:
+                data = json.load(f)
+            return jsonify(data)
     return jsonify({
         "day": 1, "phase_name": "", "phase_icon": "",
         "progress": "0/30", "progress_pct": 0,

@@ -17,10 +17,10 @@ if curl -s http://localhost:$PORT/api/content > /dev/null 2>&1; then
 fi
 
 # Start server
-# Auto-detect Python
+# Auto-detect Python with Flask
 PYTHON=""
-for cmd in python3 python; do
-  if command -v $cmd &>/dev/null; then
+for cmd in "/Users/onezion12344/.hermes/hermes-agent/venv/bin/python3" python3 python; do
+  if command -v $cmd &>/dev/null && $cmd -c "import flask" 2>/dev/null; then
     PYTHON=$cmd
     break
   fi

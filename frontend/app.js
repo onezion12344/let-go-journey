@@ -235,82 +235,7 @@ document.addEventListener('DOMContentLoaded', init);
 async function init() {
   spawnParticles();
 
-  // ── Check Auth ──
-  try {
-    const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
-    const authData = await authRes.json();
-    if (!authData.logged_in) {
-      showAuthScreen();
-      return;
-    }
-  } catch (e) {
-    showAuthScreen();
-    return;
-  }
-
-  // ── Load Game Data ──
-  try {
-    const [contentRes, progressRes] = await Promise.all([
-      fetch(`${API}/api/content`).then(r => r.json()),
-      fetch(`${API}/api/progress`).then(r => r.json())
-    ]);
-    content = contentRes;
-    progress = progressRes;
-  } catch (e) {
-    // Fallback
-    try {
-      const resp = await fetch('/api/content');
-      content = await resp.json();
-      const progResp = await fetch('/api/progress');
-      progress = await progResp.json();
-    } catch (e2) {
-      showAuthScreen();
-      return;
-    }
-  }
-
-  currentLang = progress.lang || 'zh';
-
-  if (progress.completed_days && progress.completed_days.length > 0) {
-    document.getElementById('btn-continue').style.display = 'block';
-    document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
-  }
-  document.getElementById('btn-start').textContent = t('start');
-
-  document.getElementById('btn-start').addEventListener('click', () => {
-    fetch(`${API}/api/progress/start`, { method: 'POST' }).catch(() => {});
-    showScreen('map'); renderMap();
-  });
-  document.getElementById('btn-continue').addEventListener('click', () => {
-    showScreen('map'); renderMap();
-  });
-  document.getElementById('btn-back').addEventListener('click', () => {
-    stopTimer(); showScreen('map'); renderMap();
-  });
-  document.getElementById('btn-view-map').addEventListener('click', () => {
-    stopTimer(); showScreen('map'); renderMap();
-  });
-
-  document.querySelectorAll('.btn-next[data-to]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const target = btn.dataset.to;
-      if (target === 'complete') completeDay();
-      else showStep(target);
-    });
-  });
-
-  document.getElementById('action-done').addEventListener('change', (e) => {
-    document.getElementById('btn-complete-day').disabled = !e.target.checked;
-  });
-
-  document.getElementById('mood-slider').addEventListener('input', (e) => {
-    const val = parseInt(e.target.value);
-    document.getElementById('mood-value').textContent = val;
-    const faces = ['😢','😢','😢','😐','😐','😐','😊','😊','😊','😊'];
-    document.getElementById('mood-face').textContent = faces[val - 1] || '😐';
-  });
-
-  // ── Auth Event Handlers ──
+  // ── Auth Event Handlers (mounted before auth check so they work for new users) ──
   document.getElementById('show-register').addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('auth-login').style.display = 'none';
@@ -382,6 +307,87 @@ async function init() {
   document.getElementById('reg-confirm').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') document.getElementById('btn-register').click();
   });
+
+  // ── Check Auth ──
+  try {
+    const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    const authData = await authRes.json();
+    if (!authData.logged_in) {
+      showAuthScreen();
+      return;
+    }
+  } catch (e) {
+    showAuthScreen();
+    return;
+  }
+
+  // ── Load Game Data ──
+  try {
+    const [contentRes, progressRes] = await Promise.all([
+      fetch(`${API}/api/content`).then(r => r.json()),
+      fetch(`${API}/api/progress`).then(r => r.json())
+    ]);
+    content = contentRes;
+    progress = progressRes;
+  } catch (e) {
+    // Fallback
+    try {
+      const resp = await fetch('/api/content');
+      content = await resp.json();
+      const progResp = await fetch('/api/progress');
+      progress = await progResp.json();
+    } catch (e2) {
+      showAuthScreen();
+      return;
+    }
+  }
+
+  currentLang = progress.lang || 'zh';
+
+  if (progress.completed_days && progress.completed_days.length > 0) {
+    document.getElementById('btn-continue').style.display = 'block';
+    document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
+  }
+  document.getElementById('btn-start').textContent = t('start');
+
+  document.getElementById('btn-start').onclick = () => {
+    fetch(`${API}/api/progress/start`, { method: 'POST' }).catch(() => {});
+    showScreen('map'); renderMap();
+  };
+  document.getElementById('btn-continue').onclick = () => {
+    showScreen('map'); renderMap();
+  };
+
+  setupGameListeners();
+}
+
+// ── Game Button Listeners (re-attached via onclick in afterLogin to avoid duplicates) ──
+function setupGameListeners() {
+  document.getElementById('btn-back').onclick = () => {
+    stopTimer(); showScreen('map'); renderMap();
+  };
+  document.getElementById('btn-view-map').onclick = () => {
+    stopTimer(); showScreen('map'); renderMap();
+  };
+
+  document.querySelectorAll('.btn-next[data-to]').forEach(btn => {
+    btn.onclick = (e) => {
+      const target = btn.dataset.to;
+      if (target === 'complete') completeDay();
+      else showStep(target);
+    };
+  });
+
+  document.getElementById('action-done').onchange = (e) => {
+    document.getElementById('btn-complete-day').disabled = !e.target.checked;
+  };
+
+  document.getElementById('mood-slider').oninput = (e) => {
+    const val = parseInt(e.target.value);
+    document.getElementById('mood-value').textContent = val;
+    const faces = ['😢','😢','😢','😐','😐','😐','😊','😊','😊','😊'];
+    document.getElementById('mood-face').textContent = faces[val - 1] || '😐';
+  };
 }
 
 // ── Auth ──
@@ -409,6 +415,17 @@ async function afterLogin() {
     document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
   }
   showScreen('splash');
+
+  // Re-attach handlers (onclick to avoid duplicates since setupGameListeners may also be called from init)
+  document.getElementById('btn-start').onclick = () => {
+    fetch(`${API}/api/progress/start`, { method: 'POST' }).catch(() => {});
+    showScreen('map'); renderMap();
+  };
+  document.getElementById('btn-continue').onclick = () => {
+    showScreen('map'); renderMap();
+  };
+
+  setupGameListeners();
 }
 
 // ── Screen Navigation ──
