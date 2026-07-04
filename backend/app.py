@@ -313,6 +313,13 @@ def index():
 def serve_widget():
     return send_from_directory("../widget", "widget.html")
 
+@app.route("/meditation")
+@app.route("/meditation/<path:filename>")
+def serve_meditation(filename=None):
+    if filename:
+        return send_from_directory("../meditation", filename)
+    return send_from_directory("../meditation", "index.html")
+
 # ── Favicon ──
 
 @app.route("/favicon.ico")

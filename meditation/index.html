@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🌙 睡前慈心冥想 — 放手之旅</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a14;color:#c8c8e0;font-family:-apple-system,'PingFang SC','Noto Sans SC',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden}
+#app{width:100%;max-width:420px;min-height:100vh;padding:40px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
+
+/* ── Background ambient ── */
+.bg-orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;transition:all 8s ease}
+.bg-orb.a{width:300px;height:300px;background:radial-gradient(circle,rgba(40,30,120,.5),transparent);top:-80px;right:-60px}
+.bg-orb.b{width:400px;height:400px;background:radial-gradient(circle,rgba(80,20,80,.4),transparent);bottom:-120px;left:-100px}
+.bg-orb.c{width:200px;height:200px;background:radial-gradient(circle,rgba(20,60,90,.4),transparent);top:40%;right:-40px}
+
+/* ── Stars ── */
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;animation:twinkle var(--d) ease-in-out infinite;animation-delay:var(--del)}
+
+/* ── Start Screen ── */
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;z-index:1;min-height:80vh}
+.screen.active{display:flex}
+.start-icon{font-size:4rem;margin-bottom:16px;animation:float 4s ease-in-out infinite}
+.start-title{font-size:1.8rem;font-weight:300;letter-spacing:4px;margin-bottom:8px;background:linear-gradient(135deg,#e8d8ff,#a8b8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.start-sub{font-size:.85rem;color:#8888aa;margin-bottom:32px;text-align:center;line-height:1.6}
+.timer-grid{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
+.timer-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#aaaacc;padding:12px 20px;border-radius:16px;font-size:.95rem;cursor:pointer;transition:all .4s;font-family:inherit}
+.timer-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(168,184,255,.3);color:#d0d0f0}
+.timer-btn.selected{background:rgba(168,184,255,.12);border-color:rgba(168,184,255,.4);color:#c0c8ff}
+.btn-start{background:linear-gradient(135deg,#6a5acd,#8b6fcf);color:#fff;border:none;padding:16px 48px;border-radius:28px;font-size:1.1rem;cursor:pointer;transition:all .4s;font-family:inherit;letter-spacing:2px;margin-top:8px}
+.btn-start:hover{transform:scale(1.03);box-shadow:0 8px 32px rgba(106,90,205,.3)}
+.ambient-select{margin-top:20px;display:flex;gap:10px}
+.ambient-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#8888aa;padding:8px 16px;border-radius:12px;font-size:.8rem;cursor:pointer;transition:all .3s;font-family:inherit}
+.ambient-btn.selected{background:rgba(100,200,180,.1);border-color:rgba(100,200,180,.3);color:#88ddcc}
+
+/* ── Meditation Screen ── */
+#meditation-screen{position:relative;min-height:90vh;justify-content:flex-start;padding-top:48px}
+.meditation-progress{width:100%;height:2px;background:rgba(255,255,255,.06);border-radius:2px;margin-bottom:48px;overflow:hidden}
+.meditation-progress-bar{height:100%;background:linear-gradient(90deg,#6a5acd,#a8b8ff);border-radius:2px;transition:width .5s ease;width:0%}
+.breathing-circle{width:120px;height:120px;border-radius:50%;border:2px solid rgba(168,184,255,.15);margin:0 auto 40px;display:flex;align-items:center;justify-content:center;position:relative;transition:transform 4s ease}
+.breathing-circle.inhale{transform:scale(1.15);border-color:rgba(168,184,255,.3)}
+.breathing-circle.exhale{transform:scale(.92);border-color:rgba(150,140,200,.15)}
+.breathing-hint{font-size:.75rem;color:#8888aa;letter-spacing:2px;position:absolute;bottom:-28px;white-space:nowrap}
+.guide-text{text-align:center;font-size:1.15rem;line-height:1.8;color:#d8d8f0;max-width:360px;margin:0 auto;min-height:120px;transition:opacity 1s ease;font-weight:300;letter-spacing:1px}
+.guide-text.fade{opacity:0}
+.guide-text .highlight{color:#b8b8ff}
+.guide-text .soft{color:#8888bb;font-size:.95rem}
+.metta-phrase{font-size:1.4rem;line-height:2;color:#c8c8ff;margin-top:8px;font-weight:300;letter-spacing:2px;transition:opacity 1.5s ease;min-height:60px;text-align:center}
+.metta-phrase.fade{opacity:0}
+.timer-display{font-size:.8rem;color:#666688;margin-top:32px;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.stage-label{font-size:.75rem;color:#555577;margin-top:8px;letter-spacing:2px;font-weight:300}
+
+/* ── Complete Screen ── */
+.complete-icon{font-size:4rem;margin-bottom:24px;animation:float 5s ease-in-out infinite}
+.complete-title{font-size:1.5rem;font-weight:300;color:#d0d0f0;margin-bottom:16px;text-align:center;letter-spacing:2px}
+.complete-msg{font-size:.9rem;color:#8888aa;text-align:center;line-height:1.8;max-width:300px;margin-bottom:40px}
+
+/* ── Animations ── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:.6}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+  <!-- Background orbs -->
+  <div class="bg-orb a"></div><div class="bg-orb b"></div><div class="bg-orb c"></div>
+
+  <!-- ═══ Start Screen ═══ -->
+  <div id="start-screen" class="screen active">
+    <div class="start-icon">🌙</div>
+    <h1 class="start-title">睡前慈心</h1>
+    <p class="start-sub">在溫柔的引導中放下一天<br>讓慈心帶你進入深層休息</p>
+    <div class="timer-grid">
+      <button class="timer-btn" data-min="5">5 分鐘</button>
+      <button class="timer-btn selected" data-min="10">10 分鐘</button>
+      <button class="timer-btn" data-min="15">15 分鐘</button>
+      <button class="timer-btn" data-min="20">20 分鐘</button>
+    </div>
+    <div class="ambient-select">
+      <button class="ambient-btn selected" data-sound="ocean">🌊 海浪</button>
+      <button class="ambient-btn" data-sound="rain">🌧️ 雨聲</button>
+      <button class="ambient-btn" data-sound="silence">🔇 靜默</button>
+    </div>
+    <div style="margin-top:14px">
+      <label style="font-size:.75rem;color:#666688;display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" id="audio-guide-check" checked style="accent-color:#8b6fcf">
+        開啟語音引導（慈心冥想錄音）
+      </label>
+    </div>
+    <button class="btn-start" id="btn-begin">開始</button>
+  </div>
+
+  <!-- ═══ Meditation Screen ═══ -->
+  <div id="meditation-screen" class="screen">
+    <div class="meditation-progress">
+      <div class="meditation-progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="breathing-circle" id="breathing-circle">
+      <span class="breathing-hint" id="breathing-hint">吸氣</span>
+    </div>
+    <div class="guide-text" id="guide-text"></div>
+    <div class="metta-phrase" id="metta-phrase"></div>
+    <div class="timer-display" id="timer-display"></div>
+    <div class="stage-label" id="stage-label"></div>
+  </div>
+
+  <!-- ═══ Complete Screen ═══ -->
+  <div id="complete-screen" class="screen">
+    <div class="complete-icon">🕊️</div>
+    <h2 class="complete-title">冥想完成</h2>
+    <p class="complete-msg">願你帶著慈心入睡<br>願你醒來時感到平靜與力量</p>
+    <button class="btn-start" onclick="location.reload()">再做一次</button>
+  </div>
+</div>
+
+<script>
+// ═══ Stars ═══
+(function(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.setProperty('--d',(3+Math.random()*5)+'s');
+    s.style.setProperty('--del',Math.random()*5+'s');
+    s.style.width=s.style.height=(1+Math.random()*2)+'px';
+    c.appendChild(s);
+  }
+})();
+
+// ═══ Meditation Script ═══
+const STAGES = [
+  {
+    id:'settle',
+    duration:90,
+    guide:'找一個舒服的姿勢躺下或坐著。\n輕輕閉上眼睛。\n感受身體與床或椅子的接觸。\n察覺呼吸自然的流動，\n不需要改變它，只是知道它在。',
+    metta:''
+  },
+  {
+    id:'body',
+    duration:90,
+    guide:'從頭頂開始，慢慢掃描你的身體。\n放鬆額頭、眼周、下巴。\n放鬆肩膀——讓它們沉下去。\n放鬆雙手、腹部、雙腿。\n讓整個身體被重力接住。',
+    metta:''
+  },
+  {
+    id:'breath',
+    duration:120,
+    guide:'將注意力輕輕放在呼吸上。\n吸氣——你知道你在吸氣。\n呼氣——你知道你在呼氣。\n不需要控制，只是跟隨。\n像坐在岸邊看潮水來去。',
+    metta:''
+  },
+  {
+    id:'self_kindness',
+    duration:100,
+    guide:'現在，把一隻手輕輕放在心口。\n感受掌心的溫度和心跳。\n對自己說：',
+    metta:'願我快樂'
+  },
+  {
+    id:'self_safe',
+    duration:80,
+    guide:'',
+    metta:'願我平安'
+  },
+  {
+    id:'self_free',
+    duration:80,
+    guide:'',
+    metta:'願我遠離痛苦'
+  },
+  {
+    id:'self_ease',
+    duration:80,
+    guide:'',
+    metta:'願我自在生活'
+  },
+  {
+    id:'self_repeat',
+    duration:120,
+    guide:'讓這四句話在心中迴盪：\n像溫柔的波浪，一遍又一遍。',
+    metta:'願我快樂 · 願我平安\n願我遠離痛苦 · 願我自在生活'
+  },
+  {
+    id:'benefactor',
+    duration:120,
+    guide:'想一個對你好的人。\n一個讓你想起來就感到溫暖的人。\n\n在心中看著 ta 的樣子，\n對 ta 送出同樣的祝福：',
+    metta:'願你快樂\n願你平安\n願你遠離痛苦\n願你自在生活'
+  },
+  {
+    id:'neutral',
+    duration:90,
+    guide:'想一個你不熟悉的人——\n便利商店的店員、路上見過的人。\n\n像 ta 也是一個渴望快樂的生命，\n在你的心中：',
+    metta:'願你快樂\n願你平安'
+  },
+  {
+    id:'neutral2',
+    duration:90,
+    guide:'',
+    metta:'願你遠離痛苦\n願你自在生活'
+  },
+  {
+    id:'all_beings',
+    duration:120,
+    guide:'將這份慈心擴散出去——\n像月光灑滿大地。\n\n對所有生命：認識的、不認識的、\n喜歡的、不喜歡的。\n\n沒有限制，沒有例外。',
+    metta:'願一切眾生快樂\n願一切眾生平安\n願一切眾生遠離痛苦\n願一切眾生自在生活'
+  },
+  {
+    id:'rest',
+    duration:200,
+    guide:'放下所有話語和念頭。\n只是休息。\n\n在慈心的能量中休息。\n在呼吸的自然節奏中休息。\n\n你是安全的。\n你被接住了。',
+    metta:''
+  }
+];
+
+// ═══ Audio Engine ═══
+class AmbientAudio {
+  constructor(){
+    this.ctx=null;this.playing=false;this.sound='ocean';
+    this.nodes=[];
+  }
+  async init(){
+    if(!this.ctx){
+      this.ctx=new(window.AudioContext||window.webkitAudioContext)();
+      this.master=this.ctx.createGain();
+      this.master.gain.value=0.15;
+      this.master.connect(this.ctx.destination);
+    }
+  }
+  start(type='ocean'){
+    this.sound=type;
+    if(type==='silence'){this.stop();return}
+    this.init().then(()=>{
+      this.stop();
+      this.playing=true;
+      if(type==='ocean')this.playOcean();
+      else if(type==='rain')this.playRain();
+    });
+  }
+  stop(){
+    this.playing=false;
+    this.nodes.forEach(n=>{try{n.stop();n.disconnect()}catch(e){}});
+    this.nodes=[];
+  }
+  playOcean(){
+    // Brown noise with slow LFO — sounds like ocean
+    const sr=this.ctx.sampleRate;
+    const len=sr*8;
+    const buf=this.ctx.createBuffer(1,len,sr);
+    const d=buf.getChannelData(0);
+    let v=0;
+    for(let i=0;i<len;i++){
+      v+= (Math.random()*2-1)*0.02;
+      v=Math.max(-1,Math.min(1,v));
+      d[i]=v*0.3;
+    }
+    const src=this.ctx.createBufferSource();
+    src.buffer=buf;src.loop=true;
+    const lp=this.ctx.createBiquadFilter();
+    lp.type='lowpass';lp.frequency.value=200;
+    const lfo=this.ctx.createOscillator();
+    lfo.frequency.value=0.08;
+    const lfoG=this.ctx.createGain();
+    lfoG.gain.value=80;
+    lfo.connect(lfoG);lfoG.connect(lp.frequency);
+    src.connect(lp);lp.connect(this.master);
+    src.start();lfo.start();
+    this.nodes=[src,lfo,lfoG];
+  }
+  playRain(){
+    // Filtered noise — rain
+    const sr=this.ctx.sampleRate;
+    const len=sr*8;
+    const buf=this.ctx.createBuffer(1,len,sr);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*0.4;
+    const src=this.ctx.createBufferSource();
+    src.buffer=buf;src.loop=true;
+    const bp=this.ctx.createBiquadFilter();
+    bp.type='bandpass';bp.frequency.value=400;bp.Q.value=0.5;
+    const hp=this.ctx.createBiquadFilter();
+    hp.type='highpass';hp.frequency.value=200;
+    const g=this.ctx.createGain();
+    g.gain.value=0.3;
+    src.connect(g);g.connect(bp);bp.connect(hp);hp.connect(this.master);
+    src.start();
+    this.nodes=[src];
+  }
+}
+const ambient=new AmbientAudio();
+
+// ═══ Meditation Controller ═══
+const guideEl=document.getElementById('guide-text');
+const mettaEl=document.getElementById('metta-phrase');
+const progressBar=document.getElementById('progress-bar');
+const timerDisplay=document.getElementById('timer-display');
+const stageLabel=document.getElementById('stage-label');
+const breathCircle=document.getElementById('breathing-circle');
+const breathHint=document.getElementById('breathing-hint');
+
+let totalDuration=600;
+let elapsed=0;
+let currentStage=0;
+let animFrame=null;
+let stageStartTime=0;
+let breathPhase='exhale';
+let lastBreathSwitch=0;
+
+function formatTime(sec){
+  const m=Math.floor(sec/60);
+  const s=sec%60;
+  return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function showStage(idx){
+  currentStage=Math.min(idx,STAGES.length-1);
+  const stage=STAGES[currentStage];
+  stageStartTime=elapsed;
+
+  // Update guide text
+  guideEl.style.opacity='0';
+  mettaEl.style.opacity='0';
+  setTimeout(()=>{
+    guideEl.textContent=stage.guide||' ';
+    mettaEl.textContent=stage.metta||'';
+    guideEl.style.opacity='1';
+    mettaEl.style.opacity=stage.metta?'1':'0';
+  },600);
+
+  // Stage label
+  const labels=['沈澱','身體掃描','呼吸覺察','慈心·自己','','','','','慈心·感恩','慈心·陌生人','','','慈心·遍滿','休息'];
+  stageLabel.textContent=labels[currentStage]||'';
+}
+
+function tick(){
+  elapsed+=0.1;
+  const stage=STAGES[currentStage];
+  const stageElapsed=elapsed-stageStartTime;
+
+  // Progress
+  const pct=Math.min(elapsed/totalDuration*100,100);
+  progressBar.style.width=pct+'%';
+
+  // Timer
+  const remaining=Math.max(0,totalDuration-elapsed);
+  timerDisplay.textContent=formatTime(Math.ceil(remaining));
+
+  // Breathing animation (4s cycle)
+  if(elapsed-lastBreathSwitch>=4){
+    lastBreathSwitch=elapsed;
+    if(breathPhase==='exhale'){
+      breathPhase='inhale';
+      breathCircle.className='breathing-circle inhale';
+      breathHint.textContent='吸氣⋯⋯';
+    } else {
+      breathPhase='exhale';
+      breathCircle.className='breathing-circle exhale';
+      breathHint.textContent='呼氣⋯⋯';
+    }
+  }
+
+  // Stage transition
+  if(stageElapsed>=stage.duration && currentStage<STAGES.length-1){
+    showStage(currentStage+1);
+  }
+
+  // End
+  if(elapsed>=totalDuration){
+    endMeditation();
+    return;
+  }
+
+  animFrame=requestAnimationFrame(tick);
+}
+
+function endMeditation(){
+  if(animFrame){cancelAnimationFrame(animFrame);animFrame=null}
+  ambient.stop();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('complete-screen').classList.add('active');
+}
+
+// ═══ Controls ═══
+document.getElementById('btn-begin').addEventListener('click',()=>{
+  // Get duration
+  const sel=document.querySelector('.timer-btn.selected');
+  totalDuration=(parseInt(sel?.dataset?.min||10))*60;
+
+  // Get ambient sound
+  const soundBtn=document.querySelector('.ambient-btn.selected');
+  ambient.start(soundBtn?.dataset?.sound||'ocean');
+
+  // Audio guide
+  const useAudio=document.getElementById('audio-guide-check').checked;
+  let audioGuide=null;
+  if(useAudio){
+    audioGuide=new Audio('/meditation/guide.ogg');
+    audioGuide.volume=0.8;
+    audioGuide.play().catch(()=>{});
+  }
+
+  // Switch screen
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('meditation-screen').classList.add('active');
+
+  // Start
+  elapsed=0;
+  showStage(0);
+  lastBreathSwitch=0;
+  breathPhase='exhale';
+  breathCircle.className='breathing-circle exhale';
+  breathHint.textContent='呼氣⋯⋯';
+  tick();
+});
+
+// Timer button selection
+document.querySelectorAll('.timer-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.timer-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+
+// Ambient button selection
+document.querySelectorAll('.ambient-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.ambient-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+</script>
+</body>
+</html>
