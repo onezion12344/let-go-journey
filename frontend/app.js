@@ -235,7 +235,57 @@ document.addEventListener('DOMContentLoaded', init);
 async function init() {
   spawnParticles();
 
-  // ── Auth Event Handlers (mounted before auth check so they work for new users) ──
+  // ── Auth Event Handlers (registered BEFORE auth check) ──
+  registerAuthListeners();
+
+  // ── Check Auth ──
+  try {
+    const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    const authData = await authRes.json();
+    if (!authData.logged_in) {
+      showAuthScreen();
+      return;
+    }
+  } catch (e) {
+    showAuthScreen();
+    return;
+  }
+
+  // ── Load Game Data ──
+  try {
+    const [contentRes, progressRes] = await Promise.all([
+      fetch(`${API}/api/content`).then(r => r.json()),
+      fetch(`${API}/api/progress`).then(r => r.json())
+    ]);
+    content = contentRes;
+    progress = progressRes;
+  } catch (e) {
+    // Fallback
+    try {
+      const resp = await fetch('/api/content');
+      content = await resp.json();
+      const progResp = await fetch('/api/progress');
+      progress = await progResp.json();
+    } catch (e2) {
+      showAuthScreen();
+      return;
+    }
+  }
+
+  currentLang = progress.lang || 'zh';
+
+  if (progress.completed_days && progress.completed_days.length > 0) {
+    document.getElementById('btn-continue').style.display = 'block';
+    document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
+  }
+  document.getElementById('btn-start').textContent = t('start');
+
+  // ── Game Listeners ──
+  setupGameListeners();
+
+}
+
+function registerAuthListeners() {
   document.getElementById('show-register').addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('auth-login').style.display = 'none';
@@ -307,49 +357,9 @@ async function init() {
   document.getElementById('reg-confirm').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') document.getElementById('btn-register').click();
   });
+}
 
-  // ── Check Auth ──
-  try {
-    const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
-    const authData = await authRes.json();
-    if (!authData.logged_in) {
-      showAuthScreen();
-      return;
-    }
-  } catch (e) {
-    showAuthScreen();
-    return;
-  }
-
-  // ── Load Game Data ──
-  try {
-    const [contentRes, progressRes] = await Promise.all([
-      fetch(`${API}/api/content`).then(r => r.json()),
-      fetch(`${API}/api/progress`).then(r => r.json())
-    ]);
-    content = contentRes;
-    progress = progressRes;
-  } catch (e) {
-    // Fallback
-    try {
-      const resp = await fetch('/api/content');
-      content = await resp.json();
-      const progResp = await fetch('/api/progress');
-      progress = await progResp.json();
-    } catch (e2) {
-      showAuthScreen();
-      return;
-    }
-  }
-
-  currentLang = progress.lang || 'zh';
-
-  if (progress.completed_days && progress.completed_days.length > 0) {
-    document.getElementById('btn-continue').style.display = 'block';
-    document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
-  }
-  document.getElementById('btn-start').textContent = t('start');
-
+function setupGameListeners() {
   document.getElementById('btn-start').onclick = () => {
     fetch(`${API}/api/progress/start`, { method: 'POST' }).catch(() => {});
     showScreen('map'); renderMap();
@@ -357,12 +367,6 @@ async function init() {
   document.getElementById('btn-continue').onclick = () => {
     showScreen('map'); renderMap();
   };
-
-  setupGameListeners();
-}
-
-// ── Game Button Listeners (re-attached via onclick in afterLogin to avoid duplicates) ──
-function setupGameListeners() {
   document.getElementById('btn-back').onclick = () => {
     stopTimer(); showScreen('map'); renderMap();
   };
@@ -415,16 +419,6 @@ async function afterLogin() {
     document.getElementById('btn-continue').textContent = `${t('cont')}（${t('day')} ${progress.current_day}）`;
   }
   showScreen('splash');
-
-  // Re-attach handlers (onclick to avoid duplicates since setupGameListeners may also be called from init)
-  document.getElementById('btn-start').onclick = () => {
-    fetch(`${API}/api/progress/start`, { method: 'POST' }).catch(() => {});
-    showScreen('map'); renderMap();
-  };
-  document.getElementById('btn-continue').onclick = () => {
-    showScreen('map'); renderMap();
-  };
-
   setupGameListeners();
 }
 

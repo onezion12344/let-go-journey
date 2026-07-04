@@ -309,7 +309,7 @@ body::before {
 .auth-input:focus { border-color: #7c5cfc; }
 .auth-input::placeholder { color: #666; }
 .auth-btn { margin-top: 4px; }
-.auth-error { font-size: .8rem; color: #e53935; min-height: 20px; text-align: center; }
+.auth-error { display: block; font-size: .8rem; color: #e53935; min-height: 20px; text-align: center; word-break: break-word; }
 .auth-toggle { font-size: .85rem; color: #666; margin-top: 16px; }
 .auth-toggle a { color: #7c5cfc; text-decoration: none; font-weight: 500; }
 .auth-toggle a:hover { text-decoration: underline; }
