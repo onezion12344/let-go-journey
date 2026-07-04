@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>放手之旅 — Let Go Journey</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕊️</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  background:#000;color:#f5f5f7;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Navigation ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(0,0,0,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;height:52px;
+}
+nav .logo{font-size:.9rem;font-weight:600;color:#7c5cfc;display:flex;align-items:center;gap:6px}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{color:#86868b;text-decoration:none;font-size:.8rem;transition:color .2s}
+.nav-links a:hover{color:#fff}
+
+/* ── Hero ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-30%;left:-20%;right:-20%;bottom:-30%;
+  background:radial-gradient(ellipse at 50% 40%, rgba(108,92,231,0.12) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero .badge{
+  display:inline-block;padding:6px 14px;border-radius:20px;background:rgba(124,92,252,.15);
+  color:#7c5cfc;font-size:.75rem;font-weight:500;margin-bottom:24px;letter-spacing:.5px;
+}
+.hero h1{
+  font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;letter-spacing:-2px;
+  background:linear-gradient(135deg,#fff 30%,#7c5cfc 80%);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:20px;
+}
+.hero .tagline{
+  font-size:clamp(1rem,2vw,1.35rem);color:#86868b;max-width:580px;line-height:1.5;
+  margin-bottom:40px;
+}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn-primary,.btn-ghost{
+  padding:14px 32px;border-radius:14px;font-size:.95rem;font-weight:600;
+  text-decoration:none;transition:all .3s cubic-bezier(.22,1,.36,1);display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:linear-gradient(135deg,#7c5cfc,#5c3cfc);color:#fff;border:none}
+.btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(124,92,252,.4)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#ccc;border:1px solid rgba(255,255,255,.1)}
+.btn-ghost:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+
+/* ── Section common ── */
+section{padding:100px 24px;max-width:1100px;margin:0 auto}
+section h2{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:-1px;
+  margin-bottom:16px;line-height:1.2;
+}
+section .subtitle{font-size:1.05rem;color:#86868b;max-width:640px;margin-bottom:60px;line-height:1.6}
+
+/* ── Compare Section ── */
+.compare{text-align:center;padding:120px 24px;background:radial-gradient(ellipse at 50% 0%, rgba(108,92,231,.04) 0%, transparent 50%)}
+.compare-grid{display:flex;gap:24px;justify-content:center;align-items:center;flex-wrap:wrap}
+.compare-card{
+  background:#0d0d0d;border:1px solid #2a2a2a;border-radius:20px;padding:40px 32px;min-width:240px;flex:1;max-width:340px;
+  transition:border-color .3s,transform .3s;
+}
+.compare-card:hover{border-color:#7c5cfc;transform:translateY(-4px)}
+.compare-card .pct{font-size:3.5rem;font-weight:700;margin-bottom:8px}
+.compare-card .pct.red{color:#ff5252}.compare-card .pct.green{color:#00c853}
+.compare-card .label{font-size:.85rem;color:#86868b;margin-bottom:4px}
+.compare-card .detail{font-size:.75rem;color:#555}
+.compare-arrow{font-size:2rem;color:#7c5cfc;flex-shrink:0}
+
+/* ── Pipeline ── */
+.pipeline{text-align:center}
+.pipeline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:40px}
+@media(max-width:768px){.pipeline-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+@media(max-width:480px){.pipeline-grid{grid-template-columns:1fr}}
+.pipeline-card{
+  background:#0d0d0d;border:1px solid #2a2a2a;border-radius:14px;padding:20px 14px;
+  transition:border-color .3s,transform .3s;text-align:center;
+}
+.pipeline-card:hover{border-color:#7c5cfc;transform:translateY(-4px)}
+.pipeline-card .icon{font-size:2rem;margin-bottom:8px}
+.pipeline-card .name{font-size:.85rem;font-weight:600;color:#fff;margin-bottom:4px}
+.pipeline-card .days{font-size:.7rem;color:#555}
+
+/* ── Features ── */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:40px}
+.feature-card{
+  background:#0d0d0d;border:1px solid #2a2a2a;border-radius:16px;padding:28px 20px;
+  transition:border-color .3s,transform .3s;position:relative;overflow:hidden;
+}
+.feature-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#7c5cfc,transparent);opacity:0;transition:opacity .3s;
+}
+.feature-card:hover::after{opacity:1}
+.feature-card:hover{border-color:#7c5cfc;transform:translateY(-4px)}
+.feature-card .icon{font-size:1.8rem;margin-bottom:12px}
+.feature-card h3{font-size:1rem;font-weight:600;margin-bottom:8px}
+.feature-card p{font-size:.85rem;color:#86868b;line-height:1.5}
+
+/* ── Stats ── */
+.stats{text-align:center;padding:120px 24px;
+  background:radial-gradient(ellipse at 50% 100%, rgba(108,92,231,.04) 0%, transparent 50%)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:40px}
+.stat-card{text-align:center}
+.stat-number{font-size:2.5rem;font-weight:700;color:#7c5cfc;margin-bottom:6px}
+.stat-label{font-size:.85rem;color:#86868b}
+
+/* ── Demo ── */
+.demo{text-align:center}
+.demo-video{
+  background:#0d0d0d;border:1px solid #2a2a2a;border-radius:20px;padding:40px 20px;margin-top:40px;
+  position:relative;overflow:hidden;max-width:700px;margin-left:auto;margin-right:auto;
+}
+.demo-video video{width:100%;max-width:360px;border-radius:12px;border:1px solid rgba(255,255,255,.06)}
+.demo-video .caption{color:#86868b;font-size:.8rem;margin-top:12px}
+
+/* ── CTA ── */
+.cta{text-align:center;padding:120px 24px}
+.cta h2{margin-bottom:12px}
+.cta p{color:#86868b;margin-bottom:40px;font-size:1.05rem}
+
+/* ── Footer ── */
+footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.04);color:#555;font-size:.8rem}
+footer a{color:#7c5cfc;text-decoration:none}
+
+/* ── Reveal animations ── */
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.stagger>*{opacity:0;transform:translateY(20px);transition:all .5s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.1s}
+.stagger.visible>*:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.2s}
+.stagger.visible>*:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.3s}
+.stagger.visible>*:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.4s}
+.stagger.visible>*:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.5s}
+.stagger.visible>*:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.6s}
+
+@media(prefers-reduced-motion:reduce){.reveal,.stagger>*{opacity:1;transform:none;transition:none}}
+
+/* ── Screenshot carousel ── */
+.screenshots{display:flex;gap:16px;overflow-x:auto;padding:20px 0;margin-top:40px;-webkit-overflow-scrolling:touch}
+.screenshots img{height:400px;border-radius:14px;border:1px solid #2a2a2a;flex-shrink:0}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  section{padding:60px 20px}
+  .compare-grid{flex-direction:column}
+  .compare-arrow{transform:rotate(90deg)}
+  .hero h1{font-size:2.5rem}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="logo">🕊️ 放手之旅</div>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#cta">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="badge reveal">v1.0 · Open Source</div>
+  <h1 class="reveal" style="transition-delay:.1s">Let Go Journey<br>放手之旅</h1>
+  <p class="reveal tagline" style="transition-delay:.2s">An interactive CBT game that helps you heal from heartbreak —<br>10 minutes a day, 30 days to freedom.</p>
+  <div class="hero-buttons reveal" style="transition-delay:.3s">
+    <a href="https://github.com/onezion12344/let-go-journey" class="btn-primary" target="_blank">▶ Try It Now</a>
+    <a href="https://github.com/onezion12344/let-go-journey" class="btn-ghost" target="_blank">⭐ GitHub</a>
+  </div>
+</section>
+
+<!-- Comparison -->
+<section class="compare">
+  <h2 class="reveal">From "I Can't Stop Thinking"<br>to "I'm Free"</h2>
+  <p class="subtitle reveal" style="margin:0 auto 50px">Evidence-based CBT approach instead of willpower alone</p>
+  <div class="compare-grid reveal">
+    <div class="compare-card">
+      <div class="pct red">🤯</div>
+      <div class="label">Without Structure</div>
+      <div class="detail">Rumination cycles · Relapse · Same pain for months</div>
+    </div>
+    <div class="compare-arrow">→</div>
+    <div class="compare-card" style="border-color:#7c5cfc">
+      <div class="pct green">🕊️</div>
+      <div class="label">With Let Go Journey</div>
+      <div class="detail">Daily CBT · Mood tracking · 30-day structure · Measurable progress</div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works / Pipeline -->
+<section id="how" class="pipeline">
+  <h2 class="reveal">10 Stages in 30 Days</h2>
+  <p class="subtitle reveal" style="margin:0 auto 60px">Each stage has a therapeutic focus. Daily sessions take ~10 minutes.</p>
+  <div class="pipeline-grid stagger reveal">
+    <div class="pipeline-card"><div class="icon">🏰</div><div class="name">Awakening</div><div class="days">Days 1-3</div></div>
+    <div class="pipeline-card"><div class="icon">⚔️</div><div class="name">Withdrawal</div><div class="days">Days 4-6</div></div>
+    <div class="pipeline-card"><div class="icon">🗺️</div><div class="name">Triggers</div><div class="days">Days 7-9</div></div>
+    <div class="pipeline-card"><div class="icon">🧠</div><div class="name">Mind Maze</div><div class="days">Days 10-12</div></div>
+    <div class="pipeline-card"><div class="icon">👁️</div><div class="name">Truth</div><div class="days">Days 13-15</div></div>
+    <div class="pipeline-card"><div class="icon">🌳</div><div class="name">Origins</div><div class="days">Days 16-18</div></div>
+    <div class="pipeline-card"><div class="icon">💧</div><div class="name">Forgiveness</div><div class="days">Days 19-21</div></div>
+    <div class="pipeline-card"><div class="icon">⭐</div><div class="name">Values</div><div class="days">Days 22-24</div></div>
+    <div class="pipeline-card"><div class="icon">🚀</div><div class="name">Takeoff</div><div class="days">Days 25-27</div></div>
+    <div class="pipeline-card"><div class="icon">🏆</div><div class="name">Integration</div><div class="days">Days 28-30</div></div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <h2 class="reveal">Everything You Need</h2>
+  <p class="subtitle reveal" style="margin-bottom:40px">Built for real healing, not distraction.</p>
+  <div class="features-grid stagger reveal">
+    <div class="feature-card">
+      <div class="icon">📖</div>
+      <h3>Daily Reading + Reflection</h3>
+      <p>Each day combines evidence-based reading with guided journaling — not just advice, but structured CBT exercises.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📊</div>
+      <h3>Mood Tracking</h3>
+      <p>Record your emotional state daily. Watch your trend line improve over 30 days with an interactive line chart.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🏆</div>
+      <h3>30 Badges</h3>
+      <p>One unique badge per day — from "Awakener" to "Phoenix Rising". Small wins keep you going.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🌐</div>
+      <h3>Bilingual</h3>
+      <p>Full Chinese (zh) and English (en) support. Switch anytime without losing progress.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎵</div>
+      <h3>Ambient Music</h3>
+      <p>3 generative soundtracks via Web Audio API — piano chords, deep space pad, and gentle rain. No downloads needed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📱</div>
+      <h3>Android Widget</h3>
+      <p>Native homescreen widget showing your daily task, progress bar, and affirmation. Refreshes every 30 minutes.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🔒</div>
+      <h3>100% Private</h3>
+      <p>Your journal and mood data stay on your own machine. No accounts, no cloud, no tracking.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🆓</div>
+      <h3>Free & Open Source</h3>
+      <p>MIT License. Self-host on any machine with Python. Or deploy via Cloudflare Tunnel for mobile access.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <h2 class="reveal">Built on Science</h2>
+  <div class="stats-grid reveal">
+    <div class="stat-card"><div class="stat-number">30</div><div class="stat-label">Days of CBT Content</div></div>
+    <div class="stat-card"><div class="stat-number">10</div><div class="stat-label">Therapeutic Stages</div></div>
+    <div class="stat-card"><div class="stat-number">🏆30</div><div class="stat-label">Unique Badges</div></div>
+    <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Languages</div></div>
+  </div>
+</section>
+
+<!-- Demo / Screenshots -->
+<section id="demo" class="demo">
+  <h2 class="reveal">See It In Action</h2>
+  <p class="subtitle reveal" style="margin:0 auto 30px">Start your journey in seconds — no signup required.</p>
+  <div class="demo-video reveal">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px">
+      <div style="background:#1a1a1a;border-radius:10px;padding:20px 10px;border:1px solid #2a2a2a">
+        <div style="font-size:2.5rem;margin-bottom:8px">🕊️</div>
+        <div style="color:#fff;font-size:.85rem;font-weight:500">Splash</div>
+      </div>
+      <div style="background:#1a1a1a;border-radius:10px;padding:20px 10px;border:1px solid #2a2a2a">
+        <div style="font-size:2.5rem;margin-bottom:8px">🗺️</div>
+        <div style="color:#fff;font-size:.85rem;font-weight:500">Map</div>
+      </div>
+      <div style="background:#1a1a1a;border-radius:10px;padding:20px 10px;border:1px solid #2a2a2a">
+        <div style="font-size:2.5rem;margin-bottom:8px">📖</div>
+        <div style="color:#fff;font-size:.85rem;font-weight:500">Reading</div>
+      </div>
+      <div style="background:#1a1a1a;border-radius:10px;padding:20px 10px;border:1px solid #2a2a2a">
+        <div style="font-size:2.5rem;margin-bottom:8px">📊</div>
+        <div style="color:#fff;font-size:.85rem;font-weight:500">Mood Chart</div>
+      </div>
+    </div>
+    <div class="caption">Four main screens of the Let Go Journey game interface</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="cta">
+  <h2 class="reveal">Start Healing Today</h2>
+  <p class="reveal" style="transition-delay:.1s">Self-hosted, private, and completely free.</p>
+  <div class="hero-buttons reveal" style="justify-content:center;transition-delay:.2s">
+    <a href="https://github.com/onezion12344/let-go-journey" class="btn-primary" target="_blank">▶ Get Started</a>
+    <a href="https://github.com/onezion12344/let-go-journey" class="btn-ghost" target="_blank">⭐ Star on GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <p>🕊️ <a href="https://github.com/onezion12344/let-go-journey">Let Go Journey</a> · MIT License · Built with ❤️ for healing</p>
+</footer>
+
+<script>
+// IntersectionObserver for reveal animations
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.stagger').forEach(el => obs.observe(el));
+});
+</script>
+</body>
+</html>
